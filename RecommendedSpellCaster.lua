@@ -30,12 +30,17 @@ function AddOn.castItem(ability)
     for _, slotID in ipairs(slotIDs) do
         local itemID = GetInventoryItemID('player', slotID)
         if itemID == abilityItemID then
-            Unlock('UseInventoryItem', slotID)
+            UseInventoryItem(slotID)
             break
         end
     end
 end
 
 function AddOn.castSpell(ability)
-    Unlock('CastSpellByName', ability.name)
+    if _G.GMR then
+        GMR.CastSpellByName(ability.name)
+    else
+        -- NoName unlocker
+        Unlock('CastSpellByName', ability.name)
+    end
 end
