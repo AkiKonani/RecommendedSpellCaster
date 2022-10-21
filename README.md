@@ -3,7 +3,7 @@
 This work is devoted to God.
 
 This addon provides functionality for casting the next recommended spell or item that [Hekili](https://github.com/Hekili/hekili) recommends.
-It works with the [NoName unlocker](https://no-name.site/).
+It works with the [NoName unlocker](https://no-name.site/) or [GMR](https://gmrwow.com/app/pricing).
 
 ## Usage
 
