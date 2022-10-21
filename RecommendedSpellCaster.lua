@@ -30,17 +30,38 @@ function AddOn.castItem(ability)
     for _, slotID in ipairs(slotIDs) do
         local itemID = GetInventoryItemID('player', slotID)
         if itemID == abilityItemID then
-            UseInventoryItem(slotID)
+            AddOn.useInventoryItem(slotID)
             break
         end
     end
 end
 
 function AddOn.castSpell(ability)
-    if _G.GMR then
+    if AddOn.isGMRPresent() then
         GMR.CastSpellByName(ability.name)
-    else
-        -- NoName unlocker
+    elseif AddOn.isNoNamePresent() then
         Unlock('CastSpellByName', ability.name)
+    else
+        error('No supported unlocker found.')
     end
+end
+
+function AddOn.useInventoryItem(slotID)
+    if AddOn.isGMRPresent() then
+        UseInventoryItem(slotID)
+    elseif AddOn.isNoNamePresent() then
+        Unlock('UseInventoryItem', slotID)
+    else
+        error('No supported unlocker found.')
+    end
+end
+
+
+function AddOn.isGMRPresent()
+    return _G.GMR ~= nil
+end
+
+function AddOn.isNoNamePresent()
+    -- NoName unlocker
+    return _G.Unlock ~= nil
 end
