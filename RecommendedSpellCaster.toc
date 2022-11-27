@@ -1,5 +1,5 @@
 ## Title: Recommended Spell Caster
 ## Interface: 100000
-## Dependencies: Hekili
+## Dependencies: Modules, Hekili
 
 RecommendedSpellCaster.lua
