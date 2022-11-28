@@ -1,6 +1,5 @@
-local addOnName, AddOn, exports, imports = ...
-local Modules = imports and imports.Modules or _G.Modules
-local RecommendedSpellCaster = Modules.determineExportsVariable(addOnName, exports)
+local addOnName, AddOn = ...
+RecommendedSpellCaster = RecommendedSpellCaster or {}
 
 function RecommendedSpellCaster.castRecommendedSpell()
   local ability = AddOn.retrieveNextAbility()
