@@ -3,22 +3,18 @@ RecommendedSpellCaster = RecommendedSpellCaster or {}
 
 function RecommendedSpellCaster.castRecommendedSpell()
   local ability = AddOn.retrieveNextAbility()
-  if AddOn.isItem(ability) then
-    AddOn.castItem(ability)
+  if RecommendedSpellCaster.isItem(ability) then
+    RecommendedSpellCaster.castItem(ability)
   else
     AddOn.castSpell(ability)
   end
 end
 
-function AddOn.retrieveNextAbility()
-  return Hekili_Primary_B1.Ability
-end
-
-function AddOn.isItem(ability)
+function RecommendedSpellCaster.isItem(ability)
   return ability.link ~= nil
 end
 
-function AddOn.castItem(ability)
+function RecommendedSpellCaster.castItem(ability)
   local slotIDs = {
     INVSLOT_TRINKET1,
     INVSLOT_TRINKET2,
@@ -37,21 +33,19 @@ function AddOn.castItem(ability)
   end
 end
 
+function AddOn.retrieveNextAbility()
+  return Hekili_Primary_B1.Ability
+end
+
 function AddOn.castSpell(ability)
-  if (
-    not IsCurrentSpell(ability.id) and
-      AddOn.canBeCasted(ability.id) and
-      IsSpellInRange(ability.name, 'target') ~= 0
-  ) then
-    if AddOn.isHWTPresent() then
-      CastSpellByName(ability.name)
-    elseif AddOn.isGMRPresent() then
-      GMR.CastSpellByName(ability.name)
-    elseif AddOn.isNoNamePresent() then
-      Unlock('CastSpellByName', ability.name)
-    else
-      error('No supported unlocker found.')
-    end
+  if AddOn.isHWTPresent() then
+    CastSpellByName(ability.name)
+  elseif AddOn.isGMRPresent() then
+    GMR.CastSpellByName(ability.name)
+  elseif AddOn.isNoNamePresent() then
+    Unlock('CastSpellByName', ability.name)
+  else
+    error('No supported unlocker found.')
   end
 end
 
