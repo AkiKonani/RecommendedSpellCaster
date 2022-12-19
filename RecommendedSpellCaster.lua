@@ -3,10 +3,12 @@ RecommendedSpellCaster = RecommendedSpellCaster or {}
 
 function RecommendedSpellCaster.castRecommendedSpell()
   local ability = RecommendedSpellCaster.retrieveNextAbility()
-  if RecommendedSpellCaster.isItem(ability) then
-    RecommendedSpellCaster.castItem(ability)
-  else
-    AddOn.castSpell(ability)
+  if ability then
+    if RecommendedSpellCaster.isItem(ability) then
+      RecommendedSpellCaster.castItem(ability)
+    else
+      AddOn.castSpell(ability)
+    end
   end
 end
 
