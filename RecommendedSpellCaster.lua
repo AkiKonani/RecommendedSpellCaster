@@ -2,7 +2,7 @@ local addOnName, AddOn = ...
 RecommendedSpellCaster = RecommendedSpellCaster or {}
 
 function RecommendedSpellCaster.castRecommendedSpell()
-  local ability = AddOn.retrieveNextAbility()
+  local ability = RecommendedSpellCaster.retrieveNextAbility()
   if RecommendedSpellCaster.isItem(ability) then
     RecommendedSpellCaster.castItem(ability)
   else
@@ -33,7 +33,7 @@ function RecommendedSpellCaster.castItem(ability)
   end
 end
 
-function AddOn.retrieveNextAbility()
+function RecommendedSpellCaster.retrieveNextAbility()
   return Hekili_Primary_B1.Ability
 end
 
@@ -49,7 +49,7 @@ function AddOn.castSpell(ability)
   end
 end
 
-function AddOn.canBeCasted(spellId)
+function RecommendedSpellCaster.canBeCasted(spellId)
   return (
     IsUsableSpell(spellId) and
       GetSpellCooldown(spellId) == 0
