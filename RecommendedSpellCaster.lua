@@ -1,5 +1,6 @@
-local addOnName, AddOn = ...
 RecommendedSpellCaster = RecommendedSpellCaster or {}
+local addOnName, AddOn = ...
+local _ = { }
 
 function RecommendedSpellCaster.castRecommendedSpell()
   local ability = RecommendedSpellCaster.retrieveNextAbility()
@@ -36,12 +37,14 @@ function RecommendedSpellCaster.castItem(ability)
 end
 
 function RecommendedSpellCaster.retrieveNextAbility()
-  return Hekili_Primary_B1.Ability
+  return Hekili_Primary_B1.Ability, Hekili_Primary_B1.Recommendation
 end
 
 function AddOn.castSpell(ability)
-  if AddOn.isHWTPresent() then
-    CastSpellByName(ability.name)
+  if AddOn.isHWTPresent() and _G.SpellCasting then
+    SpellCasting.castSpellByID(ability.id, {
+      empowermentLevel = recommendation.empower_to
+    })
   elseif AddOn.isGMRPresent() then
     GMR.CastSpellByName(ability.name)
   elseif AddOn.isNoNamePresent() then
@@ -51,11 +54,18 @@ function AddOn.castSpell(ability)
   end
 end
 
-function RecommendedSpellCaster.canBeCasted(spellId)
+function RecommendedSpellCaster.canBeCasted(spellID)
   return (
-    IsUsableSpell(spellId) and
-      GetSpellCooldown(spellId) == 0
+    IsUsableSpell(spellID) and
+      GetSpellCooldown(spellID) == 0 and
+      (not IsPlayerMoving() or _.isSpellThatCanBeCastedWhileMoving(spellID))
   )
+end
+
+function _.isSpellThatCanBeCastedWhileMoving(spellID)
+  -- TODO: Channeling spells?
+  local castDuration = select(4, GetSpellInfo(spellID))
+  return castDuration == 0 and not IsPressHoldReleaseSpell(spellID)
 end
 
 function AddOn.useInventoryItem(slotID)
