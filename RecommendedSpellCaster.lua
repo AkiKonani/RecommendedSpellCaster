@@ -42,7 +42,7 @@ end
 
 function AddOn.castSpell(ability)
   if AddOn.isHWTPresent() and _G.SpellCasting then
-    SpellCasting.castSpellByID(ability.id, {
+    SpellCasting.castSpell(ability.id, {
       empowermentLevel = recommendation.empower_to
     })
   elseif AddOn.isGMRPresent() then
